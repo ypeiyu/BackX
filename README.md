@@ -12,11 +12,21 @@ Attribution methods compute importance scores for input features to explain the 
 ![introduction](figs/fig_pipeline.png)
 
 
-## Evaluating with BackX
+## Backdoored Model Training (E.g., On CIFAR-10)
 
-### Step 1: Preparing dataset.
+### Step 1: Create poisoned set.
 ```
-dataset\DATASET
+python -u create_poisoned_set.py -dataset "cifar10" -poison_type "blend" -poison_rate 0.05 -alpha 0.5 -trigger "firefox_corner_32.png"
+```
+
+### Step 2: Create clean set.
+```
+python -u create_clean_set.py -dataset "cifar10"
+```
+
+### Step 3: Model Training on poisoned set.
+```
+python -u train_on_poisoned_set.py -dataset "cifar10" -poison_type "blend" -poison_rate 0.05 -alpha 0.5 -trigger "firefox_corner_32.png"
 ```
 
 
